@@ -1,12 +1,15 @@
-import { useContext } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import TablePagination from '@mui/material/TablePagination';
 
-import { PagerContext } from '../utils/PagerContext';
-import { RowsContext } from '../utils/RowsContext';
+interface PaginationInterface {
+  page: number,
+  rowsPerPage: number,
+  setPage: Dispatch<SetStateAction<number>>,
+  setRowsPerPage: Dispatch<SetStateAction<number>>,
+  count: number
+}
 
-export default function ContextTablePagination() {
-  const { page, rowsPerPage, setPage, setRowsPerPage } = useContext(PagerContext);
-  const rowsContext = useContext(RowsContext);
+export default function ContextTablePagination( { page, rowsPerPage, setPage, setRowsPerPage, count } : PaginationInterface ) {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -21,7 +24,7 @@ export default function ContextTablePagination() {
     <TablePagination
       rowsPerPageOptions={[rowsPerPage, rowsPerPage * 2, rowsPerPage * 4]}
       component="div"
-      count={rowsContext.length}
+      count={count}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}
