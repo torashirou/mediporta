@@ -4,8 +4,6 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
 import { PagerContext } from '../utils/PagerContext';
-import { RowsContext } from '../utils/RowsContext';
-import { OrderContext } from '../utils/OrderContext';
 
 interface Column {
   id: 'name' | 'count';
@@ -20,10 +18,16 @@ const columns: readonly Column[] = [
   { id: 'count', label: 'Count', minWidth: 100 },
 ];
 
-export default function ContextTableBody() {
+interface TableInteface {
+  rows: {
+    name: string,
+    count: number,
+  }[]
+  order: boolean
+}
+
+export default function ContextTableBody( { rows, order }: TableInteface) {
   const { page, rowsPerPage } = useContext(PagerContext);
-  const rows = useContext(RowsContext);
-  const { order } = useContext(OrderContext);
 
   return (
     <TableBody>

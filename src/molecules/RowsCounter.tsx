@@ -26,7 +26,7 @@ export default function RowsCounter() {
     >
       <TextField
         id="standard-number"
-        label="Number"
+        label="Ile wierszy na stronie"
         type="number"
         InputLabelProps={{
           shrink: true,
