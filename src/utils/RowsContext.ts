@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
-interface Data {
+interface RowsContextInterface {
   name: string,
   count: number,
 }
 
-export const RowsContext = createContext<Data[]>([]);
+export const RowsContext = createContext<RowsContextInterface[]>([]);

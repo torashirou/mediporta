@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 import Container from '@mui/material/Container';
@@ -6,6 +6,7 @@ import Main from './pages/Main';
 
 import useFetch from './utils/useFetch'
 import { RowsContext } from './utils/RowsContext';
+import Loader from './atoms/Loader';
 
 interface Data {
   name: string,
@@ -20,8 +21,8 @@ function createData(
 }
 
 function App() {
-  const [tags, setTags] = React.useState<any>({});
-  const [rows, setRows] = React.useState<Data[]>([]);
+  const [rows, setRows] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(false);
   const tagsData = useFetch('https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow');
 
   useEffect(() => {
@@ -29,7 +30,6 @@ function App() {
       const res = await tagsData.execute();
   
       if (res) {
-        setTags(res);
         const tempArray: Data[] = [];
         if (typeof res.items !== 'undefined') {
           res.items.sort((a : Data, b: Data) => b.count - a.count).forEach((element: Data) => {
@@ -38,14 +38,20 @@ function App() {
           setRows(tempArray);
         }
       }
+      setLoading(false);
     }
 
+    setLoading(true);
     getTagsData();
   }, []);
 
   return (
     <Container maxWidth="md">
-      <Main rows={rows}/>
+      <RowsContext.Provider value={rows}>
+        {loading
+          ? <Loader />
+          : <Main />}
+      </RowsContext.Provider>
     </Container>
   );
 }
