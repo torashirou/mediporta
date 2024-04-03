@@ -6,6 +6,7 @@ const StyledSpan = styled.span`
   position: relative;
 
   svg {
+    cursor: pointer;
     position: absolute;
     left: -30px;
   }

@@ -22,12 +22,12 @@ const columns: readonly Column[] = [
 
 export default function ContextTableBody() {
   const { page, rowsPerPage } = useContext(PagerContext);
-  const rowsContext = useContext(RowsContext);
+  const rows = useContext(RowsContext);
   const { order } = useContext(OrderContext);
 
   return (
     <TableBody>
-      {rowsContext
+      {rows
         .sort((rowA, rowB) => order ? rowA.count - rowB.count : rowB.count - rowA.count)
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => {
